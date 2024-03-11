@@ -15,6 +15,7 @@ con.connect((error)=>{
   if(error) throw error;
   console.log("connected!!!")
 });
+//setting global connection
 global.con = con;
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/stylesheets/style.css">
+    <title><%= title %></title>
+</head>
+<body>
+    <h1><%= title %></h1><br/>
+
+    <form action="/register" method="post">
+        <input type="text" name="Username" aria-label="Username" ><br/>
+        <input type="email" name="Email" aria-label="Email" > <br/>
+        <input type="password" name="Password" aria-label="Password" > <br/>
+        <input type="submit" name="submit" aria-label="submit" > <br/>
+    </form>
+</body>
+</html>

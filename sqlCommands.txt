@@ -15,3 +15,6 @@ CREATE TABLE IF NOT EXISTS users(
     create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
+
+TO Check if user EMAIL EXISTS of not
+SELECT user_id, username FROM users WHERE email LIKE 'email'

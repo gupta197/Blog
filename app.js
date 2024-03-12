@@ -9,7 +9,7 @@ var con = mysql.createConnection({
   host : "localhost",
   user:"root",
   password :"",
-  database:"blogs"
+  database:"blogManagement"
 });
 con.connect((error)=>{
   if(error) throw error;

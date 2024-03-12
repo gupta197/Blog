@@ -1,1 +1,17 @@
 This file is used to save sql Commands that used in Project
+
+To create Database
+CREATE DATABASE IF NOT EXISTS blogManagement;
+
+To DELETE the DATABASE Use Below Commands
+DROP DATABASE IF EXISTS blogManagement;
+
+To Create Table in Database;
+CREATE TABLE IF NOT EXISTS users(
+    user_id INT(100) UNSIGNED NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL DEFAULT 'user',
+    email VARCHAR(255),
+    password VARCHAR(255),
+    create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+)

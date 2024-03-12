@@ -11,10 +11,11 @@ router.get('/register', function(req, res, next) {
 });
 router.post('/register', function(req, res) {
   const {email, password, username} = req.body;
-  if(email && email.length && password && password.length && username && username.length){
+  if(email && email.trim().length && password && password.trim().length && username && username.trim().length){
+    
       
   }else{
-    res.send("All fields are required !!!")
+    res.render('register', { title: 'Register', error: "All Fields are requied" });
   }
   
 });

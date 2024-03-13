@@ -17,5 +17,11 @@ CREATE TABLE IF NOT EXISTS users(
 )
 
 TO Check if user EMAIL EXISTS of not
-SELECT user_id, username FROM users WHERE email LIKE 'email';
+SELECT user_id, username FROM users WHERE email = 'email';
+
+Insert Value in user Table
+INSERT INTO users (username,email,password) VALUES (`abc`,`abc@gmail.com`,`test`);
+
+Insert Multiple Values in user Table
+INSERT INTO users (username,email,password) VALUES (`abc`,`abc@gmail.com`,`test`),(`abcd`,`abcd@gmail.com`,`test1`);
 

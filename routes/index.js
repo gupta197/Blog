@@ -7,18 +7,19 @@ router.get('/', function(req, res, next) {
 });
 /* GET home page. */
 router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Register' });
+  res.render('register', { title: 'Register', error:"" });
 });
 router.post('/register', async function(req, res) {
   try {
     const {email, password, username} = req.body;
     if(email && email.trim().length && password && password.trim().length && username && username.trim().length){
-      let query = `SELECT user_id, username FROM users WHERE email LIKE '${email}'`
+      let query = `SELECT user_id, username FROM users WHERE email LIKE '${email}'`;
       con.query(query,(error, rows, fields)=>{
+        console.log(error, rows, fields);
         if(!error && rows.length >= 1){
           return res.render('register', { title: 'Register', error: "Email Already exists!!" });
         }
-        
+
       })
         
     }else{

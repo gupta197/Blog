@@ -17,4 +17,5 @@ CREATE TABLE IF NOT EXISTS users(
 )
 
 TO Check if user EMAIL EXISTS of not
-SELECT user_id, username FROM users WHERE email LIKE 'email'
+SELECT user_id, username FROM users WHERE email LIKE 'email';
+

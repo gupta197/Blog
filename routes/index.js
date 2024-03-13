@@ -1,4 +1,5 @@
-var express = require('express');
+var express = require('express'), 
+md5 = require('md5');
 var router = express.Router();
 
 /* GET home page. */
@@ -22,16 +23,15 @@ router.post('/register', async function(req, res) {
         if(error){
           return res.render('register', { title: 'Register', error: "Something went wrong!!", message:"" });
         }
-        query = `INSERT INTO users (username, email,password) VALUES ('${username}','${email}','${password}');`;
+        let pass = md5(password);
+        query = `INSERT INTO users (username, email,password) VALUES ('${username}','${email}','${pass}');`;
         con.query(query, (error, rows, fields)=>{
           if(error){
             return res.render('register', { title: 'Register', error: "Something went wrong!!" , message:"" });
           }
           return res.render('register', { title: username , error: "" ,message: `User register successfully` });
         })
-
       })
-        
     }else{
      return res.render('register', { title: 'Register', error: "All Fields are requied", message:"" });
     }

@@ -17,5 +17,8 @@
         <input class="form-input" type="password" name="password" aria-label="Password"  placeholder="Password"> <br/>
         <input class="form-button" type="submit" name="submit" aria-label="submit" > <br/>
     </form>
+    <% if(message.length > 0){ %>
+        <div><strong class="text-success"><%= message %></strong></div>
+      <% } %>
 </body>
 </html>

@@ -25,3 +25,11 @@ INSERT INTO users (username,email,password) VALUES (`abc`,`abc@gmail.com`,`test`
 Insert Multiple Values in user Table
 INSERT INTO users (username,email,password) VALUES (`abc`,`abc@gmail.com`,`test`),(`abcd`,`abcd@gmail.com`,`test1`);
 
+DELETE THE RECORDS
+DELETE FROM users WHERE user_id = 1;
+
+DELETE Multiple RECORDS
+DELETE FROM users WHERE user_id IN (2,3,4);
+
+TRUNCATE the records or Refresh the table;
+TRUNCATE users;

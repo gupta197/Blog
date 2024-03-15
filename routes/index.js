@@ -4,7 +4,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Blogs' });
+  let message = req.session.email ? "User register successfully. Please login!!" : "";
+  if(message.length){
+    return res.redirect('home');
+  }else{
+    return res.render('index', { title: 'Blogs' });
+  }
 });
 /* GET signup page. */
 router.get('/register', function(req, res, next) {

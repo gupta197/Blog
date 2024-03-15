@@ -51,7 +51,11 @@ router.post('/register', async function(req, res) {
 /* GET login page. */
 router.get('/login', function(req, res, next) {
   let message = req.session.email ? "User register successfully. Please login!!" : "";
-  res.render('login', { title: 'Login', error:"", message: message});
+  if(message.length){
+    return res.redirect('home');
+  }else{
+    return res.render('login', { title: 'Login', error:"", message: message});
+  }
 });
 router.post('/login', async function(req, res) {
   try {

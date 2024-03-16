@@ -94,7 +94,7 @@ module.exports = {
     },
     logout : async (req,res) =>{
         console.log("sessionDestroyed",req.session);
-        let sessionDestroyed = dele req.session.destroy();
+        let sessionDestroyed = await req.session.destroy();
         console.log(sessionDestroyed);
         return res.redirect('/')
     }

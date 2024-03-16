@@ -18,8 +18,13 @@ router.post('/register', authController.postRegisterPage );
 /* GET login page. */
 router.get('/login', authController.getLoginPage);
 router.post('/login', authController.postLoginPage);
+router.get('/logout', authController.logout);
 
 router.get('/home', function(req, res, next) {
-  return res.render('userHome', { username: req.session.username, error:"", message:"" });
+  if(req.session.email){
+    return res.render('userHome', { username: req.session.username, error:"", message:"" });
+  }else{
+    return res.redirect('/')
+  }
 });
 module.exports = router;

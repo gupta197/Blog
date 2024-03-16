@@ -82,7 +82,6 @@ module.exports = {
                     req.session.save();
                   }
                   return res.redirect('login');
-                  // return res.render('register', { title: username , error: "" ,message: `User register successfully` });
                 })
               })
             }else{
@@ -95,7 +94,8 @@ module.exports = {
     },
     logout : async (req,res) =>{
         console.log("sessionDestroyed",req.session);
-        let sessionDestroyed = await req.session.destroy();
+        let sessionDestroyed = dele req.session.destroy();
         console.log(sessionDestroyed);
+        return res.redirect('/')
     }
 }

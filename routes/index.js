@@ -6,7 +6,7 @@ router = express.Router();
 router.get('/', function(req, res, next) {
   let message = req.session.email ? "User register successfully. Please login!!" : "";
   if(message.length){
-    return res.redirect('home');
+    return res.redirect('user');
   }else{
     return res.render('index', { title: 'Blogs', isUserLoggedIn: false });
   }
@@ -19,12 +19,9 @@ router.post('/register', authController.postRegisterPage );
 router.get('/login', authController.getLoginPage);
 router.post('/login', authController.postLoginPage);
 router.get('/logout', authController.logout);
-
-router.get('/home', function(req, res, next) {
-  if(req.session.email){
-    return res.render('userHome', { title:'profile', username: req.session.username, error:"", message:"" , isUserLoggedIn: true});
-  }else{
-    return res.redirect('/')
-  }
+router.get('/about', async (req,res)=>{
+  let isUserLoggedIn = req.session.email ? true: false;
+  return res.render('aboutus', { title: 'Blogs', isUserLoggedIn: isUserLoggedIn });
 });
+
 module.exports = router;

@@ -4,7 +4,7 @@ module.exports = {
     getLoginPage: async (req, res, next) => { 
         let message = req.session.email ? "User register successfully. Please login!!" : "";
         if(message.length){
-          return res.redirect('home');
+          return res.redirect('/user');
         }else{
           return res.render('login', { title: 'Login', error:"", message: message});
         }
@@ -25,7 +25,7 @@ module.exports = {
                     req.session.username = rows[0].username;
                     req.session.save();
                   }
-                  return res.redirect('/home');
+                  return res.redirect('/user');
                 }else{
                   return res.render('login', { title: 'Login', error: "Invalid credations!!", message:`` });
                 }
@@ -51,7 +51,7 @@ module.exports = {
     getRegisterPage: async (req, res) => {
         let message = req.session.email ? "User register successfully. Please login!!" : "";
         if(message.length){
-          return res.redirect('home');
+          return res.redirect('/user');
         }else{
             return res.render('register', { title: 'Register', error:"", message:"" });
         }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('head'); %>
+</head>
+
+<body class="container">
+    <header>
+        <%- include('header',{title:title,isUserLoggedIn: isUserLoggedIn}); %>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <h1>
+                About
+            </h1>
+            <p>
+                Customize this section to tell your visitors a little bit about your publication, writers, content, or
+                something else entirely. Totally up to you.
+            </p>
+        </div>
+    </main>
+    <footer>
+        <%- include('footer'); %>
+    </footer>
+</body>
+
+</html>

@@ -76,12 +76,7 @@ module.exports = {
                   if(error){
                     return res.render('register', { title: 'Register', error: "Something went wrong!!" , message:"" });
                   }
-                  console.log("session",req.session)
-                  if(!req.session.email){
-                    req.session.email = email;
-                    req.session.save();
-                  }
-                  return res.redirect('login');
+                  return res.redirect('/');
                 })
               })
             }else{
@@ -93,7 +88,6 @@ module.exports = {
         }        
     },
     logout : async (req,res) =>{
-        console.log("sessionDestroyed",req.session);
         let sessionDestroyed = await req.session.destroy();
         console.log(sessionDestroyed);
         return res.redirect('/')

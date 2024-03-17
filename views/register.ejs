@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/public/stylesheets/style.css">
+    <%- include('head'); %>
 </head>
+
 <body>
-    <h1><%= title %></h1><br/>
-    <% if(error.length > 0){ %>
-        <div><strong class="text-red"><%= error %></strong></div>
-      <% } %>
-    <form class="form" action="/register" method="post">
-        <input class="form-input" class="" type="text" name="username" aria-label="Username" placeholder="Username"><br/>
-        <input class="form-input" type="email" name="email" aria-label="Email" placeholder="Email" > <br/>
-        <input class="form-input" type="password" name="password" aria-label="Password"  placeholder="Password"> <br/>
-        <input class="form-button" type="submit" name="submit" aria-label="submit" > / <a href="/login" class="login"> Login</a> <br/>
-    </form>
-    <% if(message.length > 0){ %>
-        <div><strong class="text-success"><%= message %></strong></div>
-      <% } %>
+    <header>
+        <%- include('header',{title:title,isUserLoggedIn: false}); %>
+    </header>
+    <main>
+        <div class="jumbotron">
+            <% if(error.length> 0){ %>
+                <div><strong class="text-red">
+                        <%= error %>
+                    </strong></div>
+                <% } %>
+                    <form class="form" action="/register" method="post">
+                        <input class="form-input" class="" type="text" name="username" aria-label="Username"
+                            placeholder="Username"><br />
+                        <input class="form-input" type="email" name="email" aria-label="Email" placeholder="Email">
+                        <br />
+                        <input class="form-input" type="password" name="password" aria-label="Password"
+                            placeholder="Password"> <br />
+                        <input class="form-button" type="submit" name="submit" aria-label="submit"> / <a href="/login"
+                            class="login"> Login</a> <br />
+                    </form>
+                    <% if(message.length> 0){ %>
+                        <div><strong class="text-success">
+                                <%= message %>
+                            </strong></div>
+                        <% } %>
+        </div>
+    </main>
+    <footer>
+        <%- include('footer'); %>
+    </footer>
 </body>
+
 </html>

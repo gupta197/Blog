@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('head'); %>
 </head>
-<body class="container">
-<header>
-  <%- include('header',{title:title}); %>
-</header>
 
-<main>
-  <p>Welcome to <%= title %></p>
-  <div class="jumbotron">
-    <h1>This is great</h1>
-    <p>Welcome to templating using EJS</p>
-  </div>
-  <h1><%= title %></h1>
-    
-  <div class="container">
-      <div class="content"> 
+<body class="container">
+  <header>
+    <%- include('header',{title:title,isUserLoggedIn: isUserLoggedIn}); %>
+  </header>
+
+  <main>
+    <div class="jumbotron">
+      <h1>
+        <%= title %>
+      </h1>
+      <p>Welcome to blogs</p>
+    </div>
+    <h1></h1>
+
+    <div class="container">
+      <div class="content">
         <a href="/login" class="login-button">Login</a>
         <a href="/register" class="register-button">Register</a>
       </div>
-  </div>
-</main>
+    </div>
+  </main>
 
-<footer>
-  <%- include('footer'); %>
-</footer>
+  <footer>
+    <%- include('footer'); %>
+  </footer>
 </body>
+
 </html>

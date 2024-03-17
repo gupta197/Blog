@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   if(message.length){
     return res.redirect('home');
   }else{
-    return res.render('index', { title: 'Blogs' });
+    return res.render('index', { title: 'Blogs', isUserLoggedIn: false });
   }
 });
 /* GET signup page. */
@@ -22,7 +22,7 @@ router.get('/logout', authController.logout);
 
 router.get('/home', function(req, res, next) {
   if(req.session.email){
-    return res.render('userHome', { username: req.session.username, error:"", message:"" });
+    return res.render('userHome', { title:'profile', username: req.session.username, error:"", message:"" , isUserLoggedIn: true});
   }else{
     return res.redirect('/')
   }

@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <div class="container">
-        <div class="content"> 
-          <a href="/login" class="login-button">Login</a>
-          <a href="/register" class="register-button">Register</a>
-        </div>
+<html lang="en">
+<head>
+  <%- include('head'); %>
+</head>
+<body class="container">
+<header>
+  <%- include('header',{title:title}); %>
+</header>
 
-    </div>
-  </body>
+<main>
+  <p>Welcome to <%= title %></p>
+  <div class="jumbotron">
+    <h1>This is great</h1>
+    <p>Welcome to templating using EJS</p>
+  </div>
+  <h1><%= title %></h1>
+    
+  <div class="container">
+      <div class="content"> 
+        <a href="/login" class="login-button">Login</a>
+        <a href="/register" class="register-button">Register</a>
+      </div>
+  </div>
+</main>
+
+<footer>
+  <%- include('footer'); %>
+</footer>
+</body>
 </html>

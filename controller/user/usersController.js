@@ -8,7 +8,7 @@ module.exports = {
           currentPassword = md5(currentPassword)
           newPassword = md5(newPassword);
           if(currentPassword == req.session.password){
-            let query = `UPDATE users SET password == '${newPassword}' WHERE email = '${req.session.email}'`;
+            let query = `UPDATE users SET password ='${newPassword}' WHERE email = '${req.session.email}'`;
             con.query(query,(error, rows, fields)=>{
               console.log(error, rows, fields)
               // if(!error && rows.length >= 1){
@@ -58,7 +58,7 @@ module.exports = {
           let {newName} = req.body;
           if(newName && newName.trim().lengthh){
             if(newName !== req.session.username){
-              let query = `UPDATE users SET username == '${newName}' WHERE email = '${req.session.email}'`;
+              let query = `UPDATE users SET username = '${newName}' WHERE email = '${req.session.email}'`;
               con.query(query,async (error, rows, fields)=>{
                 console.log(error, rows, fields);
   

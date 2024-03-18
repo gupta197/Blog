@@ -6,7 +6,7 @@ module.exports = {
         if(message.length){
           return res.redirect('/user');
         }else{
-          return res.render('login', { title: 'Login', error:"", message: message});
+          return res.render('login', { title: 'Login', error:"", message: message, isUserLoggedIn: false, name:"" });
         }
     },
 
@@ -27,7 +27,7 @@ module.exports = {
                   }
                   return res.redirect('/user');
                 }else{
-                  return res.render('login', { title: 'Login', error: "Invalid credations!!", message:`` });
+                  return res.render('login', { title: 'Login', error: "Invalid credations!!", message:``, isUserLoggedIn: false, name:"" });
                 }
               
               }
@@ -36,15 +36,15 @@ module.exports = {
               }
               if(error){
                 console.log("error message in login", error);
-                return res.render('login', { title: 'Login', error: "Something went wrong!!", message:"" });
+                return res.render('login', { title: 'Login', error: "Something went wrong!!", message:"" , isUserLoggedIn: false, name:""});
               }
             })
           }else{
-           return res.render('login', { title: 'Login', error: "All Fields are requied", message:"" });
+           return res.render('login', { title: 'Login', error: "All Fields are requied", message:"", isUserLoggedIn: false, name:"" });
           }
         } catch (error) {
           console.log("Error in register", error.message)
-          return res.render('login', { title: 'Login', error: "Something went wrong!!" , message:""});
+          return res.render('login', { title: 'Login', error: "Something went wrong!!" , message:"" , isUserLoggedIn: false, name:""});
         }
     },
 
@@ -53,7 +53,7 @@ module.exports = {
         if(message.length){
           return res.redirect('/user');
         }else{
-            return res.render('register', { title: 'Register', error:"", message:"" });
+            return res.render('register', { title: 'Register', error:"", message:"" , isUserLoggedIn: false, name:"" });
         }
        
     },
@@ -65,26 +65,26 @@ module.exports = {
               let query = `SELECT user_id, username FROM users WHERE email = '${email}'`;
               con.query(query,(error, rows, fields)=>{
                 if(!error && rows.length >= 1){
-                  return res.render('register', { title: 'Register', error: "Email Already exists!!", message:"" });
+                  return res.render('register', { title: 'Register', error: "Email Already exists!!", message:"", isUserLoggedIn: false, name:""  });
                 }
                 if(error){
-                  return res.render('register', { title: 'Register', error: "Something went wrong!!", message:"" });
+                  return res.render('register', { title: 'Register', error: "Something went wrong!!", message:"", isUserLoggedIn: false, name:""  });
                 }
                 let pass = md5(password);
                 query = `INSERT INTO users (username, email,password) VALUES ('${username}','${email}','${pass}');`;
                 con.query(query, (error, rows, fields)=>{
                   if(error){
-                    return res.render('register', { title: 'Register', error: "Something went wrong!!" , message:"" });
+                    return res.render('register', { title: 'Register', error: "Something went wrong!!" , message:"", isUserLoggedIn: false, name:""  });
                   }
                   return res.redirect('/');
                 })
               })
             }else{
-             return res.render('register', { title: 'Register', error: "All Fields are requied", message:"" });
+             return res.render('register', { title: 'Register', error: "All Fields are requied", message:"", isUserLoggedIn: false, name:""  });
             }
         }catch (error) {
             console.log("Error in register", error.message)
-            return res.render('register', { title: 'Register', error: "Something went wrong!!" , message:""});
+            return res.render('register', { title: 'Register', error: "Something went wrong!!" , message:"", isUserLoggedIn: false, name:"" });
         }        
     },
     logout : async (req,res) =>{

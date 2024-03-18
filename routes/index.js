@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   if(message.length){
     return res.redirect('user');
   }else{
-    return res.render('index', { title: 'Blogs', isUserLoggedIn: false });
+    return res.render('index', { title: 'Blogs', isUserLoggedIn: false, name:"" });
   }
 });
 /* GET signup page. */

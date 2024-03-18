@@ -6,6 +6,6 @@ const isUserLoggedIn = async (req ,res ,next ) => {
       next();
       return;
     }else{
-      return res.render('index', { title: 'Blogs', isUserLoggedIn: false });
+      return res.render('index', { title: 'Blogs', isUserLoggedIn: false, name:"" });
     }
 }

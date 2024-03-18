@@ -1,11 +1,28 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">Blogs</a>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/about">About</a>
-      </li>
-    </ul>
-  </nav>
+  <a class="navbar-brand" href="/">Blogs</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/about">About</a>
+    </li>
+    <li class="nav-item">
+      <% if(isUserLoggedIn==true){ %>
+        <div class="dropdown">
+          <a class="btn btn-primary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Hello, <%= name %>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="user/">Profile</a></li>
+            <li><a class="dropdown-item" href="user/changePassword">Change Password</a></li>
+            <li><a class="dropdown-item" href="user/setting">Setting</a></li>
+            <li><a class="dropdown-item" href="/logout">logout</a></li>
+          </ul>
+        </div>
+        <% } else{ %>
+          <a class="nav-link" href="/login">login</a>
+          <% } %>
+    </li>
+  </ul>
+</nav>

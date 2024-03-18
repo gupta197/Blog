@@ -56,7 +56,7 @@ module.exports = {
       try {
         try {
           let {newName} = req.body;
-          if(newName && newName.trim().lengthh){
+          if(newName && newName.trim().length){
             if(newName !== req.session.username){
               let query = `UPDATE users SET username = '${newName}' WHERE email = '${req.session.email}'`;
               con.query(query,async (error, rows, fields)=>{

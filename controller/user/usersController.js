@@ -11,24 +11,6 @@ module.exports = {
             let query = `UPDATE users SET password ='${newPassword}' WHERE email = '${req.session.email}'`;
             con.query(query,(error, rows, fields)=>{
               console.log(error, rows, fields)
-              // if(!error && rows.length >= 1){
-              //   let pass = md5(password);
-              //   if(rows[0].Password == pass){
-              //     if(!req.session.username && !req.session.password){
-              //       req.session.email = email;
-              //       req.session.password = pass;
-              //       req.session.username = rows[0].username;
-              //       req.session.save();
-              //     }
-              //     return res.redirect('/user');
-              //   }else{
-              //     return res.render('login', { title: 'Login', error: "Invalid credations!!", message:``, isUserLoggedIn: false, name:"" });
-              //   }
-              
-              // }
-              // if(rows.length == 0){
-              //   return res.render('login', { title: 'Login', error: "Invalid credations!!", message:`` });
-              // }
               if(!error){
                 req.session.password = newPassword;
                 req.session.save();
@@ -61,25 +43,6 @@ module.exports = {
               let query = `UPDATE users SET username = '${newName}' WHERE email = '${req.session.email}'`;
               con.query(query,async (error, rows, fields)=>{
                 console.log(error, rows, fields);
-  
-                // if(!error && rows.length >= 1){
-                //   let pass = md5(password);
-                //   if(rows[0].Password == pass){
-                //     if(!req.session.username && !req.session.password){
-                //       req.session.email = email;
-                //       req.session.password = pass;
-                //       req.session.username = rows[0].username;
-                //       req.session.save();
-                //     }
-                //     return res.redirect('/user');
-                //   }else{
-                //     return res.render('login', { title: 'Login', error: "Invalid credations!!", message:``, isUserLoggedIn: false, name:"" });
-                //   }
-                
-                // }
-                // if(rows.length == 0){
-                //   return res.render('login', { title: 'Login', error: "Invalid credations!!", message:`` });
-                // }
                 if(!error){
                   req.session.username = newName;
                   req.session.save();

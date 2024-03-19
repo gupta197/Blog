@@ -33,3 +33,14 @@ DELETE FROM users WHERE user_id IN (2,3,4);
 
 TRUNCATE the records or Refresh the table;
 TRUNCATE users;
+
+
+To Create Table in Database;
+CREATE TABLE IF NOT EXISTS posts(
+    posts_id INT(100) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(100) NOT NULL,
+    title VARCHAR(255) NOT NULL DEFAULT 'title',
+    content VARCHAR(255),
+    create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

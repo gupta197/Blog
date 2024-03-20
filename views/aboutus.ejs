@@ -5,25 +5,35 @@
     <%- include('head'); %>
 </head>
 
-<body class="container">
-    <header>
-        <%- include('header',{title:title,isUserLoggedIn: isUserLoggedIn, name: ""}); %>
-    </header>
-
-    <main>
-        <div class="jumbotron">
-            <h1>
-                About
-            </h1>
-            <p>
-                Customize this section to tell your visitors a little bit about your publication, writers, content, or
-                something else entirely. Totally up to you.
-            </p>
+<body>
+    <div class="container">
+        <div class="row">
+            <%- include('header',{title:title,isUserLoggedIn: isUserLoggedIn,name:name}); %>
         </div>
-    </main>
-    <footer>
-        <%- include('footer'); %>
-    </footer>
+        <div class="row row-main p-4">
+            <main>
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="text-center">
+                            About
+                        </h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <p>
+                            Customize this section to tell your visitors a little bit about your publication, writers,
+                            content, or
+                            something else entirely. Totally up to you.
+                        </p>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div class="row">
+            <%- include('footer'); %>
+        </div>
+    </div>
 </body>
 
 </html>

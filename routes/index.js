@@ -21,7 +21,7 @@ router.post('/login', authController.postLoginPage);
 router.get('/logout', authController.logout);
 router.get('/about', async (req,res)=>{
   let isUserLoggedIn = req.session.email ? true: false;
-  return res.render('aboutus', { title: 'Blogs', isUserLoggedIn: isUserLoggedIn });
+  return res.render('aboutus', { title: 'Blogs', isUserLoggedIn: isUserLoggedIn , name: req.session.username || ""});
 });
 
 module.exports = router;

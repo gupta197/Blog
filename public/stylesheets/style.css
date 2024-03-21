@@ -11,3 +11,12 @@ a {
   color: red;
   font-size: 12px;
 }
+
+.noPageResult{
+  height: 100px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+}

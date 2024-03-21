@@ -25,7 +25,10 @@ INSERT INTO users (username,email,password) VALUES (`abc`,`abc@gmail.com`,`test`
 Insert Multiple Values in user Table
 INSERT INTO users (username,email,password) VALUES (`abc`,`abc@gmail.com`,`test`),(`abcd`,`abcd@gmail.com`,`test1`);
 
-DELETE THE RECORDS
+Update User details
+UPDATE users SET username = '${newName}' WHERE email = '${email}
+
+DELETE THE User RECORDS
 DELETE FROM users WHERE user_id = 1;
 
 DELETE Multiple RECORDS
@@ -47,3 +50,19 @@ CREATE TABLE IF NOT EXISTS posts(
 
 TO ALTER the Datatype of column
 ALTER TABLE posts MODIFY content LONGTEXT;
+
+TO GET ALL posts
+SELECT * FROM posts;
+
+To GET user base posts
+SELECT * FROM posts WHERE user_id = 1;
+
+To get post Detail 
+SELECT * FROM posts WHERE posts_id = 1;
+
+To DELETE post 
+DELETE FROM posts WHERE posts_id = 1;
+
+To update the post
+UPDATE posts SET title = '${title}', content = '${content}' WHERE posts_id = 1;
+

@@ -13,38 +13,24 @@
     </div>
     
     <div class="row">
-      <div class="col-4 pt-2">
-        <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
+      <% if(records.length > 0){ %>
+        <% for(var i=0; i < records.length; i++){ %>
+            <div class="col-4 pt-2">
+              <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">records[i].title</h5>
+                  <p class="card-text">records[i].content</p>
+                  <a href="#" class="btn btn-primary">View more</a>
+                </div>
+              </div>
+            </div>
+        <% } %>
+      <% } else { %>
+        <div class="col-12 p-10 text-center noPageResult" >
+              No Post Found 
         </div>
-      </div>
-
-      <div class="col-4 pt-2">
-        <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-4 pt-2">
-        <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
+      <% } %>
     </div>
 
     <div class="row">

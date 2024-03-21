@@ -4,11 +4,17 @@ router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  let message = req.session.email ? "User register successfully. Please login!!" : "";
-  if(message.length){
-    return res.redirect('user');
-  }else{
-    return res.render('index', { title: 'Blogs', isUserLoggedIn: false, name:"" });
+  try {
+    let message = req.session.email ? "User register successfully. Please login!!" : "";
+    if(message.length){
+      return res.redirect('user');
+    }else{
+
+      return res.render('index', { title: 'Blogs', isUserLoggedIn: false, name:"",records : [] });
+    }
+    
+  } catch (error) {
+    return res.render('index', { title: 'Blogs', isUserLoggedIn: false, name:"" , records : []});
   }
 });
 /* GET signup page. */

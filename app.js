@@ -19,6 +19,7 @@ con.connect((error)=>{
 global.con = con;
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var postRouter = require('./routes/posts');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use(session({secret:"bloging",resave:false,saveUninitialized:true}))
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
+app.use('/post', postRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -21,6 +21,7 @@ module.exports = {
                 if(rows[0].Password == pass){
                   if(!req.session.username && !req.session.password){
                     req.session.email = email;
+                    req.session.user_id = user_id;
                     req.session.password = pass;
                     req.session.username = rows[0].username;
                     req.session.save();

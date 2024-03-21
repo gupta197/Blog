@@ -1,16 +1,18 @@
 var express = require('express'), 
 authController = require('../controller/Auth/authController'),
+{getAllPost} = require('../controller/post/postController'),
 router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', async function(req, res, next) {
   try {
     let message = req.session.email ? "User register successfully. Please login!!" : "";
     if(message.length){
       return res.redirect('user');
     }else{
-
-      return res.render('index', { title: 'Blogs', isUserLoggedIn: false, name:"",records : [] });
+      let records = await getAllPost(req,res);
+      console.log("records",records)
+      return res.render('index', { title: 'Blogs', isUserLoggedIn: false, name:"",records : records });
     }
     
   } catch (error) {

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('head'); %>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="row">
+      <%- include('header',{title:title,isUserLoggedIn: isUserLoggedIn,name:name}); %>
+    </div>
+    
+    <div class="row">
+      <% if(records.length > 0){ %>
+            <div class="col-12 pt-2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 title text-center">
+                            <h1 title=""><%= records[0].title %></h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="description"><%= records[i].content %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      <% } else { %>
+        <div class="col-12 p-10 text-center noPageResult" >
+              No Detail Found 
+        </div>
+      <% } %>
+    </div>
+
+    <div class="row">
+      <%- include('footer'); %>
+    </div>
+  </div>
+</body>
+
+</html>

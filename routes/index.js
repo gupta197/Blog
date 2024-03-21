@@ -1,6 +1,6 @@
 var express = require('express'), 
 authController = require('../controller/Auth/authController'),
-{getAllPost} = require('../controller/post/postController'),
+postController = require('../controller/post/postController'),
 router = express.Router();
 
 /* GET home page. */
@@ -10,13 +10,13 @@ router.get('/', async function(req, res, next) {
     if(message.length){
       return res.redirect('user');
     }else{
-      let records = await getAllPost(req,res);
+      let records = await postController.getAllPost(req,res);
       console.log("records",records)
-      return res.render('index', { title: 'Blogs', isUserLoggedIn: false, name:"",records : records });
+      return res.render('index', { title: 'Blogs', isUserLoggedIn: req.session.user_id ? true : false, name:"",records : records });
     }
     
   } catch (error) {
-    return res.render('index', { title: 'Blogs', isUserLoggedIn: false, name:"" , records : []});
+    return res.render('index', { title: 'Blogs', isUserLoggedIn: req.session.user_id ? true : false, name:"" , records : []});
   }
 });
 /* GET signup page. */

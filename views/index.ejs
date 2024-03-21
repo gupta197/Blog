@@ -21,7 +21,7 @@
                 <div class="card-body">
                   <h5 class="card-title"><%= records[i].title %></h5>
                   <p class="card-text"> <%= records[i].content.length > 100 ? records[i].content.slice(0,100) + '...'  :  records[i].content %></p>
-                  <a href="#" class="btn btn-primary">View more</a>
+                  <a href='/post/<%= records[i].posts_id %>' class="btn btn-primary">View more</a>
                 </div>
               </div>
             </div>

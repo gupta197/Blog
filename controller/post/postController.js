@@ -22,7 +22,30 @@ module.exports = {
 
     },
     deletePost: async (req, res) => {
-
+        try{
+        let id = req.params.id && req.params.id.length  ? Number(req.params.id) : req.params.id;
+        if(id && id !== NaN){
+            let query = `DELETE FROM posts WHERE posts_id = ${id}`;
+            con.query(query, async (error, rows, fields)=>{
+                try {
+                    if(error){
+                        return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name:"",records : [] })
+                    }
+                    req.query = {user_id : req.session.user_id}
+                    let records = await getPosts(req,res);
+                    return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name:"",records : records });
+                } catch (error) {
+                    return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name:"",records : [] })
+                }
+            });
+            return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name:"",records : records });
+        }else{
+            return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false , name:"" , records : []});
+        }
+    } catch (error) {
+        console.log("error", error)
+        return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name:"" , records : []});
+    }
     },
     getAllPost : getPosts
 }

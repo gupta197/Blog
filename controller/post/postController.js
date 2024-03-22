@@ -3,7 +3,7 @@ module.exports = {
         try {
             let id = req.params.id && req.params.id.length  ? Number(req.params.id) : req.params.id;
             if(id && id !== NaN){
-                let records = await getAllPost(req,res);
+                let records = await getPosts(req,res);
                 console.log("records",records)
                 return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name:"",records : records });
             }else{
@@ -24,9 +24,9 @@ module.exports = {
     deletePost: async (req, res) => {
 
     },
-    getAllPost : getAllPost
+    getAllPost : getPosts
 }
-async function getAllPost(req, res){
+async function getPosts(req, res){
     return new Promise((resolve, reject) => {
         try {
             let query = `SELECT * FROM posts`;

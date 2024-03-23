@@ -17,19 +17,30 @@ module.exports = {
 
     },
     createPost: async (req, res) => {
+        try {
+            if (title && title.trim().length && content && content.trim().length) {
+                let query = `INSERT INTO posts (title,content) VALUES ('${title}','${content}');`;
+                await service.queryExecution(query);
+                return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+            } else {
+                return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+            }
+        } catch (error) {
+            return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+        }
 
     },
     updatePost: async (req, res) => {
         try {
-            const {title, content} = req.body;
+            const { title, content } = req.body;
             let id = req.params.id && req.params.id.length ? Number(req.params.id) : req.params.id;
-          if(title && title.trim().length && content && content.trim().length && id && id !== NaN){
+            if (title && title.trim().length && content && content.trim().length && id && id !== NaN) {
                 let query = `UPDATE posts SET title = '${title}', content = '${content}' WHERE posts_id = ${id}`;
                 await service.queryExecution(query);
                 return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
-          }else{
-            return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
-          }
+            } else {
+                return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+            }
         } catch (error) {
             return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
         }

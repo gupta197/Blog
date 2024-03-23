@@ -18,6 +18,7 @@ module.exports = {
     },
     createPost: async (req, res) => {
         try {
+            const { title, content } = req.body;
             if (title && title.trim().length && content && content.trim().length) {
                 let query = `INSERT INTO posts (title,content) VALUES ('${title}','${content}');`;
                 await service.queryExecution(query);

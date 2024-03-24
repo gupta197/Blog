@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('head'); %>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="row">
+      <%- include('header',{title:title,isUserLoggedIn: isUserLoggedIn,name:name}); %>
+    </div>
+    
+    <div class="row">
+      <% if(records.length > 0){ %>
+        <% for(var i=0; i < records.length; i++){ %>
+            <div class="col-4 pt-2">
+              <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><%= records[i].title %></h5>
+                  <p class="card-text"> <%= records[i].content.length > 100 ? records[i].content.slice(0,100) + '...'  :  records[i].content %></p>
+                  <a href='/post/<%= records[i].posts_id %>' class="btn btn-primary">View more</a>
+                </div>
+              </div>
+            </div>
+        <% } %>
+      <% } else { %>
+        <div class="col-12 p-10 text-center noPageResult" >
+              No Post Found 
+        </div>
+      <% } %>
+    </div>
+
+    <div class="row">
+      <%- include('footer'); %>
+    </div>
+  </div>
+</body>
+
+</html>

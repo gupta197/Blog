@@ -22,12 +22,12 @@ module.exports = {
             if (title && title.trim().length && content && content.trim().length) {
                 let query = `INSERT INTO posts (title,content) VALUES ('${title}','${content}');`;
                 await service.queryExecution(query);
-                return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+                return res.render('CreateORUpdatePost', { title: 'Create Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
             } else {
-                return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+                return res.render('CreateORUpdatePost', { title: 'Create Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
             }
         } catch (error) {
-            return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+            return res.render('CreateORUpdatePost', { title: 'Create Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
         }
 
     },
@@ -38,12 +38,12 @@ module.exports = {
             if (title && title.trim().length && content && content.trim().length && id && id !== NaN) {
                 let query = `UPDATE posts SET title = '${title}', content = '${content}' WHERE posts_id = ${id}`;
                 await service.queryExecution(query);
-                return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+                return res.render('CreateORUpdatePost', { title: 'Update Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
             } else {
-                return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+                return res.render('CreateORUpdatePost', { title: 'Update Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
             }
         } catch (error) {
-            return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+            return res.render('CreateORUpdatePost', { title: 'Update Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
         }
 
     },
@@ -55,13 +55,13 @@ module.exports = {
                 await service.queryExecution(query);
                 req.query = { user_id: req.session.user_id }
                 let records = await getPosts(req, res);
-                return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: records });
+                return res.render('userAllPost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: records });
             } else {
-                return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+                return res.render('userAllPost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
             }
         } catch (error) {
             console.log("error delete", error)
-            return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+            return res.render('userAllPost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
         }
     },
     getAllPost: getPosts

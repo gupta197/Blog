@@ -64,6 +64,29 @@ module.exports = {
             return res.render('userAllPost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
         }
     },
+    getPostForm: async (req, res) => {
+        try {
+            return res.render('userAllPost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+        } catch (error) {
+            console.log("error delete", error)
+            return res.render('userAllPost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+        }
+    },
+    getPostUpdateForm: async (req, res) => {
+        try {
+            let id = req.params.id && req.params.id.length ? Number(req.params.id) : req.params.id;
+            if (id && id !== NaN) {
+                let records = await getPosts(req, res);
+                console.log("records", records)
+                return res.render('userPostUpdateForm', { title: 'Post Update Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: records });
+            } else {
+                return res.render('userPostUpdateForm', { title: 'Post Update Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+            }
+        } catch (error) {
+            console.log("error userPostUpdateForm", error)
+            return res.render('userPostUpdateForm', { title: 'Post Update Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+        }
+    },
     getAllPost: getPosts
 }
 async function getPosts(req, res) {

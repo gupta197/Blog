@@ -87,6 +87,15 @@ module.exports = {
             return res.render('userPostUpdateForm', { title: 'Post Update Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
         }
     },
+    getUserAllPost : async function(req, res, next) {
+        try {
+            let records = await postController.getAllPost(req,res);
+            console.log("records",records)
+            return res.render('userAllPost', { title: 'Blogs', isUserLoggedIn: req.session.user_id ? true : false, name:"",records : records });
+        } catch (error) {
+          return res.render('userAllPost', { title: 'Blogs', isUserLoggedIn: req.session.user_id ? true : false, name:"" , records : []});
+        }
+      },
     getAllPost: getPosts
 }
 async function getPosts(req, res) {

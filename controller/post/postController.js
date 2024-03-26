@@ -66,10 +66,10 @@ module.exports = {
     },
     getPostForm: async (req, res) => {
         try {
-            return res.render('userAllPost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+            return res.render('CreateORUpdatePost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [],error :"",message:"" });
         } catch (error) {
             console.log("error delete", error)
-            return res.render('userAllPost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+            return res.render('CreateORUpdatePost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [],error :"" , message:"" });
         }
     },
     getPostUpdateForm: async (req, res) => {

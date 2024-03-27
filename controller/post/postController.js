@@ -51,7 +51,8 @@ module.exports = {
         try {
             let id = req.params.id && req.params.id.length ? Number(req.params.id) : req.params.id;
             if (id && id !== NaN) {
-                let query = `DELETE FROM posts WHERE posts_id = ${id} AND user_id = ${req.session.user_id}`;
+                let query = `DELETE FROM posts WHERE posts_id = ${id}`;
+                // let query = `DELETE FROM posts WHERE posts_id = ${id} AND user_id = ${req.session.user_id}`;
                 await service.queryExecution(query);
                 req.query = { user_id: req.session.user_id }
                 let records = await getPosts(req, res);

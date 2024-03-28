@@ -11,6 +11,7 @@ router.post('/deleteUser', userController.deleteUser);
 router.get('/dashboard', postController.getUserAllPost);
 router.get('/post/delete/:id', postController.deletePost);
 router.post('/post/:id', postController.updatePost);
+router.post('/post', postController.createPost);
 router.get('/post/getPostUpdateForm/:id', postController.getPostUpdateForm);
 router.get('/post/getPostForm', postController.getPostForm);
 

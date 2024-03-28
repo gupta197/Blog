@@ -20,14 +20,16 @@ module.exports = {
         try {
             const { title, content } = req.body;
             if (title && title.trim().length && content && content.trim().length) {
-                let query = `INSERT INTO posts (title,content) VALUES ('${title}','${content}');`;
+                let user_id = req.session.user_id || 1; 
+                let query = `INSERT INTO posts (title,content,user_id) VALUES ('${title}','${content}',${user_id});`;
                 await service.queryExecution(query);
-                return res.render('CreateORUpdatePost', { title: 'Create Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+                return res.render('CreateORUpdatePost', { title: 'Create Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] , error :"", message:"" });
             } else {
-                return res.render('CreateORUpdatePost', { title: 'Create Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+                return res.render('CreateORUpdatePost', { title: 'Create Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [], error :"" , message:"" });
             }
         } catch (error) {
-            return res.render('CreateORUpdatePost', { title: 'Create Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+            console.log("error create", error)
+            return res.render('CreateORUpdatePost', { title: 'Create Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] ,error :error.sqlMessage , message:"" });
         }
 
     },

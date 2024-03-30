@@ -24,8 +24,8 @@
                 <div class="card-body">
                   <h5 class="card-title"><%= records[i].title %></h5>
                   <p class="card-text"> <%= records[i].content.length > 100 ? records[i].content.slice(0,100) + '...'  :  records[i].content %></p>
-                  <a href='post/<%= records[i].posts_id %>' class="btn btn-warning">Edit</a>
-                  <a href='post/delete/<%= records[i].posts_id %>' class="btn btn-danger">Delete</a>
+                  <a href='/user/post/getPostUpdateForm/<%= records[i].posts_id %>' class="btn btn-warning">Edit</a>
+                  <a href='/user/post/delete/<%= records[i].posts_id %>' class="btn btn-danger">Delete</a>
                 </div>
               </div>
             </div>

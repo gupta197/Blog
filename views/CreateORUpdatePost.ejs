@@ -17,26 +17,31 @@
                 <div class="row">
                     <div class="col-12">
                         <% if(error.length> 0){ %>
-                            <div class="mb-3 p-4"><strong class="text-red">
+                            <div class="mb-3 p-4">
+                                <strong class="text-red">
                                     <%= error %>
-                                </strong></div>
+                                </strong>
+                            </div>
                             <% } %>
-                                <form class="row g-3" action="/user/post" method="post">
+                                <form class="row g-3" action="<%= pageUrl %>" method="post">
                                     <div class="mb-3 row">
                                         <label for="staticTitle" class="col-sm-2 col-form-label">Title</label>
                                         <div class="col-sm-10">
                                             <input type="text" type="text" name="title" class="form-control"
-                                                id="inputTitle" placeholder="Enter idea title" >
+                                                id="inputTitle" placeholder="Enter idea title" value="<%= blogtitle %>">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputContent" class="col-sm-2 col-form-label">Content</label>
                                         <div class="col-sm-10">
                                             <textarea type="text" name="content" class="form-control" id="inputContent"
-                                                placeholder="Explain your Idea "></textarea>
+                                                placeholder="Explain your Idea "><%= content %></textarea>
                                         </div>
                                     </div>
-                                    <div class="mb-3 row" style="    display: flex; justify-content: center;">
+                                    <div class="mb-3 row" style="display: flex; justify-content: center;">
+                                        <a class="btn btn-warning mb-3 col-sm-2 col-form-label" type="submit" href="/user/dashboard"
+                                            name="submit" aria-label="submit" style="margin-right: 10px;">
+                                            cancel</a>
                                         <button class="btn btn-primary mb-3 col-sm-2 col-form-label" type="submit"
                                             name="submit" aria-label="submit" style="margin-right: 10px;">
                                             Submit</button>
@@ -44,9 +49,11 @@
 
                                 </form>
                                 <% if(message.length> 0){ %>
-                                    <div><strong class="text-success">
+                                    <div>
+                                        <strong class="text-success">
                                             <%= message %>
-                                        </strong></div>
+                                        </strong>
+                                    </div>
                                     <% } %>
                     </div>
                 </div>

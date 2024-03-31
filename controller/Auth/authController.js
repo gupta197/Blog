@@ -77,8 +77,7 @@ module.exports = {
         }        
     },
     logout : async (req,res) =>{
-        let sessionDestroyed = await req.session.destroy();
-        console.log(sessionDestroyed);
+        await req.session.destroy();
         return res.redirect('/')
     }
 }

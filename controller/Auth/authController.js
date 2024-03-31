@@ -1,4 +1,5 @@
 const md5 = require('md5');
+const {queryExecution} = require('../../Services/services')
 
 module.exports = {
     getLoginPage: async (req, res, next) => { 
@@ -15,31 +16,26 @@ module.exports = {
           const {email, password} = req.body;
           if(email && email.trim().length && password && password.trim().length){
             let query = `SELECT user_id, username, Password FROM users WHERE email = '${email}'`;
-            con.query(query,(error, rows, fields)=>{
-              if(!error && rows.length >= 1){
-                let pass = md5(password);
-                if(rows[0].Password == pass){
-                  if(!req.session.username && !req.session.password){
-                    req.session.email = email;
-                    req.session.user_id = user_id;
-                    req.session.password = pass;
-                    req.session.username = rows[0].username;
-                    req.session.save();
-                  }
-                  return res.redirect('/user');
-                }else{
-                  return res.render('login', { title: 'Login', error: "Invalid credations!!", message:``, isUserLoggedIn: false, name:"" });
+            let rows = await queryExecution(query);
+            if(rows.length >= 1){
+              let pass = md5(password);
+              if(rows[0].Password == pass){
+                if(!req.session.username && !req.session.password){
+                  req.session.email = email;
+                  req.session.user_id = rows[0].user_id;
+                  req.session.password = pass;
+                  req.session.username = rows[0].username;
+                  req.session.save();
                 }
-              
+                return res.redirect('/user');
+              }else{
+                return res.render('login', { title: 'Login', error: "Invalid credations!!", message:``, isUserLoggedIn: false, name:"" });
               }
-              if(rows.length == 0){
-                return res.render('login', { title: 'Login', error: "Invalid credations!!", message:`` });
-              }
-              if(error){
-                console.log("error message in login", error);
-                return res.render('login', { title: 'Login', error: "Something went wrong!!", message:"" , isUserLoggedIn: false, name:""});
-              }
-            })
+            
+            }
+            if(rows.length == 0){
+              return res.render('login', { title: 'Login', error: "Invalid credations!!", message:`` });
+            }
           }else{
            return res.render('login', { title: 'Login', error: "All Fields are requied", message:"", isUserLoggedIn: false, name:"" });
           }
@@ -64,22 +60,14 @@ module.exports = {
             const {email, password, username} = req.body;
             if(email && email.trim().length && password && password.trim().length && username && username.trim().length){
               let query = `SELECT user_id, username FROM users WHERE email = '${email}'`;
-              con.query(query,(error, rows, fields)=>{
-                if(!error && rows.length >= 1){
-                  return res.render('register', { title: 'Register', error: "Email Already exists!!", message:"", isUserLoggedIn: false, name:""  });
-                }
-                if(error){
-                  return res.render('register', { title: 'Register', error: "Something went wrong!!", message:"", isUserLoggedIn: false, name:""  });
-                }
-                let pass = md5(password);
-                query = `INSERT INTO users (username, email,password) VALUES ('${username}','${email}','${pass}');`;
-                con.query(query, (error, rows, fields)=>{
-                  if(error){
-                    return res.render('register', { title: 'Register', error: "Something went wrong!!" , message:"", isUserLoggedIn: false, name:""  });
-                  }
-                  return res.redirect('/');
-                })
-              })
+              let rows = await queryExecution(query);
+              if(rows.length >= 1){
+                return res.render('register', { title: 'Register', error: "Email Already exists!!", message:"", isUserLoggedIn: false, name:""  });
+              }
+              let pass = md5(password);
+              query = `INSERT INTO users (username, email,password) VALUES ('${username}','${email}','${pass}');`;
+              rows = await queryExecution(query);
+              return res.render('login', { title: 'Register', error: "You have register successfully. Please login your self" , message:"", isUserLoggedIn: false, name:""  });
             }else{
              return res.render('register', { title: 'Register', error: "All Fields are requied", message:"", isUserLoggedIn: false, name:""  });
             }

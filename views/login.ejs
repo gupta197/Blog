@@ -27,7 +27,7 @@
                                     <div class="mb-3 row">
                                         <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
                                         <div class="col-sm-10">
-                                          <input type="text" type="email" name="email" class="form-control" id="inputEmail">
+                                          <input type="email" name="email" class="form-control" id="inputEmail">
                                         </div>
                                       </div>
                                       <div class="mb-3 row">
@@ -43,9 +43,11 @@
                                     
                                 </form>
                                 <% if(message.length> 0){ %>
-                                    <div><strong class="text-success">
+                                    <div class="row col-12 pt-4 pb-2">
+                                        <strong class="text-success">
                                             <%= message %>
-                                        </strong></div>
+                                        </strong>
+                                    </div>
                                     <% } %>
                     </div>
                 </div>
@@ -58,9 +60,6 @@
             </div>
         </div>
     </div>
-    <footer>
-        
-    </footer>
 </body>
 
 </html>

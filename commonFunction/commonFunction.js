@@ -1,7 +1,8 @@
+// sendResponse Function used to send the response with all parameter that is use in page
 module.exports.sendResponse = async (req, res, data) => {
     let resposne = {
         title: data.pageTitle || 'Blogs',
-        isUserLoggedIn: req.session.user_id ? true : false,
+        isUserLoggedIn: data.isUserLoggedIn || req.session.user_id ? true : false,
         name: "",
         records: data.records || [],
         error: data.error || "",
@@ -14,6 +15,7 @@ module.exports.sendResponse = async (req, res, data) => {
     let page = data.page || 'index'
     return res.render( page , resposne)
 }
+// This function is used for exexute the query in sql
 module.exports.queryExecution = async (query) =>{
     console.log("Query", query);
     return new Promise((resolve, reject) => {

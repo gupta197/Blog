@@ -1,5 +1,5 @@
 const md5 = require('md5');
-const {queryExecution} = require('../../Services/services')
+const {queryExecution} = require('../../commonFunction/commonFunction')
 
 module.exports = {
     getLoginPage: async (req, res, next) => { 

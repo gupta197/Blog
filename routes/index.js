@@ -11,7 +11,6 @@ router.get('/', async function(req, res, next) {
       return res.redirect('user');
     }else{
       let records = await postController.getAllPost(req,res);
-      console.log("records",records)
       return res.render('index', { title: 'Blogs', isUserLoggedIn: req.session.user_id ? true : false, name:"",records : records });
     }
     

@@ -1,11 +1,10 @@
-let service = require('../../Services/services')
+let {queryExecution} = require('../../commonFunction/commonFunction');
 module.exports = {
     getPostDetail: async (req, res) => {
         try {
             let id = req.params.id && req.params.id.length ? Number(req.params.id) : req.params.id;
             if (id && id !== NaN) {
                 let records = await getPosts(req, res);
-                console.log("records", records)
                 return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: records });
             } else {
                 return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
@@ -33,7 +32,7 @@ module.exports = {
             if (title && title.trim().length && content && content.trim().length) {
                 let user_id = req.session.user_id || 1; 
                 let query = `INSERT INTO posts (title,content,user_id) VALUES ('${title}','${content}',${user_id});`;
-                await service.queryExecution(query);
+                await queryExecution(query);
                 return res.render('CreateORUpdatePost', obj);
             } else {
                 obj.message = "All fields are required";
@@ -63,7 +62,7 @@ module.exports = {
             let id = req.params.id && req.params.id.length ? Number(req.params.id) : req.params.id;
             if (title && title.trim().length && content && content.trim().length && id && id !== NaN) {
                 let query = `UPDATE posts SET title = '${title}', content = '${content}' WHERE posts_id = ${id}`;
-                await service.queryExecution(query);
+                await queryExecution(query);
                 obj.message = "Record update Successfully"
                 delete req.params.id;
                 let records = await getPosts(req,res);
@@ -86,7 +85,7 @@ module.exports = {
             if (id && id !== NaN) {
                 // let query = `DELETE FROM posts WHERE posts_id = ${id}`;
                 let query = `DELETE FROM posts WHERE posts_id = ${id} AND user_id = ${req.session.user_id}`;
-                await service.queryExecution(query);
+                await queryExecution(query);
                 req.query = { user_id: req.session.user_id }
                 delete req.params.id;
                 let records = await getPosts(req, res);
@@ -135,7 +134,6 @@ module.exports = {
             let id = req.params.id && req.params.id.length ? Number(req.params.id) : req.params.id;
             if (id && id !== NaN) {
                 let records = await getPosts(req, res);
-                console.log("records", records);
                 obj.blogtitle = records[0].title;
                 obj.content = records[0].content;
                 return res.render('CreateORUpdatePost', obj);
@@ -172,7 +170,6 @@ async function getPosts(req, res) {
             if (req.params.id && req.query.user_id) {
                 query += ` WHERE posts_id = ${Number(req.params.id)} AND user_id = ${req.session.user_id}`;
             }
-            console.log("query", query);
             con.query(query, (error, rows, fields) => {
                 if (error) {
                     console.log("query error", error);

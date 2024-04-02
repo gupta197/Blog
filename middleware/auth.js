@@ -1,11 +1,9 @@
-const md5 = require('md5');
-
+const {sendResponse} = require('../commonFunction/commonFunction');
 const isUserLoggedIn = async (req ,res ,next ) => {
-    let message = req.session.email ? "User register successfully. Please login!!" : "";
     if(req.session.email){
       next();
       return;
     }else{
-      return res.render('index', { title: 'Blogs', isUserLoggedIn: false, name:"" });
+      return sendResponse(req,res ,{page : 'index', pageTitle : "Blogs"})
     }
 }

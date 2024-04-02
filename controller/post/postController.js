@@ -1,4 +1,4 @@
-let {queryExecution} = require('../../commonFunction/commonFunction');
+let {queryExecution, sendResponse} = require('../../commonFunction/commonFunction');
 module.exports = {
     getPostDetail: async (req, res) => {
         try {

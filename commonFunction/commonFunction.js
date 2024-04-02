@@ -15,6 +15,7 @@ module.exports.sendResponse = async (req, res, data) => {
     let page = data.page || 'index'
     return res.render( page , resposne)
 }
+
 // This function is used for exexute the query in sql
 module.exports.queryExecution = async (query) =>{
     console.log("Query", query);

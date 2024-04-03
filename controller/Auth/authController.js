@@ -27,7 +27,7 @@ module.exports = {
                   req.session.username = rows[0].username;
                   req.session.save();
                 }
-                return res.redirect('/user');
+                return res.redirect('/user/dashboard');
               }else{
                 return res.render('login', { title: 'Login', error: "Invalid credations!!", message:``, isUserLoggedIn: false, name:"" });
               }

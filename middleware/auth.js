@@ -1,9 +1,10 @@
 const {sendResponse} = require('../commonFunction/commonFunction');
-const isUserLoggedIn = async (req ,res ,next ) => {
+module.exports.isUserLoggedIn = async (req ,res ,next ) => {
+  console.log("here",req.session.email)
     if(req.session.email){
       next();
       return;
     }else{
-      return sendResponse(req,res ,{page : 'index', pageTitle : "Blogs"})
+      return res.redirect('/')
     }
 }

@@ -13,8 +13,13 @@ var con = mysql.createConnection({
   database:"blogManagement"
 });
 con.connect((error)=>{
-  if(error) throw error;
-  console.log("connected!!!")
+  try {
+    if(error) throw error;
+    console.log("connected!!!")
+  } catch (error) {
+    console.log("Database not Connected")
+  }
+
 });
 //setting global connection
 global.con = con;

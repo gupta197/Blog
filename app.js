@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mysql = require("mysql");
 var session = require("express-session");
+var {sendResponse} = require('./commonFunction/commonFunction')
 var con = mysql.createConnection({
   host : "localhost",
   user:"root",
@@ -52,8 +53,13 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  // res.status(err.status || 500);
+  const data ={
+    page : "error",
+    pageTitle : "No Page Found"
+
+  }
+  return sendResponse(req,res,data)
 });
 
 module.exports = app;

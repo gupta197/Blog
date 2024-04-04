@@ -1,10 +1,10 @@
 # Blog
-## In this project we will Create Blog with different user
+## In this project we will create Blog with different user
 ## showing Blogs to users
-# In this Project we Using Nodejs and Mysql
+# In this Project we are using Nodejs and Mysql
 
 # Blog
-In the Blog, we are providing user Will create blog, login, view users blogs
+In the project we are providing to user to handle blog.
 
 ## Installation
 

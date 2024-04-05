@@ -20,3 +20,12 @@ a {
   justify-content: space-around;
   align-items: stretch;
 }
+.dropdown .btn:hover{
+  background:transparent !important;
+  /* color: transparent !important; */
+  border-color: transparent !important;
+}
+.dropdown .dropdown-menu{
+  min-width: 10%;
+  left: -20px;
+}

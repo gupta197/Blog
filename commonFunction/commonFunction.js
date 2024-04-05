@@ -34,6 +34,7 @@ module.exports.queryExecution = async (query) => {
 module.exports.handleValidation = function (err) {
     const messages = [];
     for (let field in err.errors) {
+        console.log(field,"field== >",err.errors[field].message)
         return err.errors[field].message;
     }
     return messages;
@@ -60,43 +61,44 @@ module.exports.checkBlank = function (arr) {
 
 module.exports.validatioReqBody = (req, res, data) => {
     let schema, validateId = false, idEvalation = true, id;
+    console.log(data)
     switch (data) {
         case "login":
             schema = Joi.object({
                 email: Joi.string().email().required(),
                 password: Joi.string().required()
-            });
+            }).unknown();
             break;
         case "register":
             schema = Joi.object({
                 email: Joi.string().email().required(),
                 password: Joi.string().required(),
                 username: Joi.string().required()
-            });
+            }).unknown();
 
             break;
         case "createPost":
             schema = Joi.object({
                 title: Joi.string().required(),
                 content: Joi.string().required()
-            });
+            }).unknown();
             break;
         case "updateUserName":
             schema = Joi.object({
                 newName: Joi.string().required()
-            });
+            }).unknown();
             break;
 
         case "changePassword":
             schema = Joi.object({
                 currentPassword: Joi.string().required(),
                 newPassword: Joi.string().required()
-            });
+            }).unknown();
             break;
         case "deleteUser":
             schema = Joi.object({
                 password: Joi.string().required()
-            });
+            }).unknown();
             break;
 
         case "vaildateId":
@@ -122,7 +124,7 @@ module.exports.validatioReqBody = (req, res, data) => {
     const { error } = schema.validate(req.body);
       // Validate user input
       if (error) {
-        return false
+        return error.details[0].message;
       }
       return idEvalation;
 }

@@ -1,5 +1,5 @@
 const md5 = require('md5');
-const {queryExecution} = require('../../commonFunction/commonFunction')
+const {queryExecution, validatioReqBody, sendResponse} = require('../../commonFunction/commonFunction')
 
 module.exports = {
     getLoginPage: async (req, res, next) => { 
@@ -7,14 +7,15 @@ module.exports = {
         if(message.length){
           return res.redirect('/user');
         }else{
-          return res.render('login', { title: 'Login', error:"", message: message, isUserLoggedIn: false, name:"" });
+          return sendResponse(req, res, {page : 'login', pageTitle: 'Login'});
         }
     },
 
     postLoginPage: async (req, res) => {
         try {
           const {email, password} = req.body;
-          if(email && email.trim().length && password && password.trim().length){
+          let checkValidate = validatioReqBody(req, res, "login");
+          if(checkValidate == true){
             let query = `SELECT user_id, username, Password FROM users WHERE email = '${email}'`;
             let rows = await queryExecution(query);
             if(rows.length >= 1){
@@ -29,19 +30,18 @@ module.exports = {
                 }
                 return res.redirect('/user/dashboard');
               }else{
-                return res.render('login', { title: 'Login', error: "Invalid credations!!", message:``, isUserLoggedIn: false, name:"" });
+                return sendResponse(req, res, {page : 'login', pageTitle: 'Login' , error: "Invalid credations!!"});
               }
             
             }
             if(rows.length == 0){
-              return res.render('login', { title: 'Login', error: "Invalid credations!!", message:`` });
+              return sendResponse(req, res, {page : 'login', pageTitle: 'Login' , error: "Invalid credations!!"});
             }
           }else{
-           return res.render('login', { title: 'Login', error: "All Fields are requied", message:"", isUserLoggedIn: false, name:"" });
+            return sendResponse(req, res, {page : 'login', pageTitle: 'Login' , error: checkValidate});
           }
         } catch (error) {
-          console.log("Error in register", error.message)
-          return res.render('login', { title: 'Login', error: "Something went wrong!!" , message:"" , isUserLoggedIn: false, name:""});
+          return sendResponse(req, res, {page : 'login', pageTitle: 'Login' , error: "Something went wrong!!"});
         }
     },
 

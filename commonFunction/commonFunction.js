@@ -1,40 +1,68 @@
 const Joi = require('joi')
 // sendResponse Function used to send the response with all parameter that is use in page
 module.exports.sendResponse = async (req, res, data) => {
-    let resposne = {
-        title: data.pageTitle || 'Blogs',
-        isUserLoggedIn: data.isUserLoggedIn || req.session.user_id ? true : false,
-        name: "",
-        records: data.records || [],
-        error: data.error || "",
-        message: data.message || "",
-        blogtitle: data.blogtitle || "",
-        content: data.content || "",
-        pageUrl: data.pageUrl || '/user/post'
-
+    try {
+        let resposne = {
+            title: data.pageTitle || 'Blogs',
+            isUserLoggedIn: data.isUserLoggedIn || req.session && req.session.user_id ? true : false,
+            name:  req.session && req.session.username ? req.session.username : "",
+            username: req.session && req.session.username ? req.session.username : "",
+            records: data.records || [],
+            error: data.error || "",
+            message: data.message || "",
+            blogtitle: data.blogtitle || "",
+            content: data.content || "",
+            pageUrl: data.pageUrl || '/user/post'
+    
+        }
+        let page = data.page || 'index'
+        return res.render(page, resposne)
+    } catch (error) {
+        return res.render("index", {
+            title: 'Blogs',
+            isUserLoggedIn:  false,
+            name:"",
+            username:"",
+            records: [],
+            error: "",
+            message: "",
+            blogtitle: "",
+            content:"",
+            pageUrl: '/user/post'
+        })
     }
-    let page = data.page || 'index'
-    return res.render(page, resposne)
+
 }
 
 // This function is used for exexute the query in sql
-module.exports.queryExecution = async (query) => {
+module.exports.queryExecution = async (query, values) => {
     console.log("Query", query);
     return new Promise((resolve, reject) => {
-        con.query(query, (error, rows, fields) => {
-            if (error) {
-                console.log("query error", error);
-                return reject(error)
-            }
-            return resolve(rows);
-        });
+        values = values && values.length ? values : [];
+        if (values.length) {
+            con.query(query, values, (error, rows, fields) => {
+                if (error) {
+                    console.log("query error", error);
+                    return reject(error)
+                }
+                return resolve(rows);
+            });
+        } else {
+            con.query(query, (error, rows, fields) => {
+                if (error) {
+                    console.log("query error", error);
+                    return reject(error)
+                }
+                return resolve(rows);
+            });
+        }
+
     })
 }
 
 module.exports.handleValidation = function (err) {
     const messages = [];
     for (let field in err.errors) {
-        console.log(field,"field== >",err.errors[field].message)
         return err.errors[field].message;
     }
     return messages;
@@ -61,7 +89,6 @@ module.exports.checkBlank = function (arr) {
 
 module.exports.validatioReqBody = (req, res, data) => {
     let schema, validateId = false, idEvalation = true, id;
-    console.log(data)
     switch (data) {
         case "login":
             schema = Joi.object({
@@ -118,13 +145,13 @@ module.exports.validatioReqBody = (req, res, data) => {
             idEvalation = true;
             break;
     }
-    if(validateId){
+    if (validateId) {
         return idEvalation
     }
     const { error } = schema.validate(req.body);
-      // Validate user input
-      if (error) {
+    // Validate user input
+    if (error) {
         return error.details[0].message;
-      }
-      return idEvalation;
+    }
+    return idEvalation;
 }

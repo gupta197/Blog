@@ -1,0 +1,21 @@
+-- Create Database 
+CREATE DATABASE IF NOT EXISTS blogManagement;
+use blogManagement;
+-- Create Table For Users
+CREATE TABLE IF NOT EXISTS users(
+    user_id INT(100) UNSIGNED NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL DEFAULT 'user',
+    email VARCHAR(255),
+    password VARCHAR(255),
+    create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+-- Create Table For Post
+CREATE TABLE IF NOT EXISTS posts(
+    posts_id INT(100) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(100) NOT NULL,
+    title VARCHAR(255) NOT NULL DEFAULT 'title',
+    content LONGTEXT,
+    create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

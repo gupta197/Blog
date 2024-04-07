@@ -25,9 +25,15 @@ npm install
 ```
 Step 4
 
-Update All the cred according to your configuration. you Have to update in app.js for successful setup
-
+Update All the cred according to your configuration. you Have to update in app.js, Package.json for successful setup
+In the package.json file We have create a script to run the migration to create database and table in Sql. Detail Update according to your requirement
 Step 5
+```bash
+npm run migrate
+``` 
+On First time setup you have to perform Step 5. 
+
+Step 6
 ```bash
 npm start
 ``` 

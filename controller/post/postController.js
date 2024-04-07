@@ -1,158 +1,93 @@
-let {queryExecution, sendResponse} = require('../../commonFunction/commonFunction');
+const mysql = require('mysql');
+let { queryExecution, sendResponse, validatioReqBody } = require('../../commonFunction/commonFunction');
 module.exports = {
     getPostDetail: async (req, res) => {
         try {
-            let id = req.params.id && req.params.id.length ? Number(req.params.id) : req.params.id;
-            if (id && id !== NaN) {
+            let checkValidate = validatioReqBody(req, res, "vaildateId");
+            if (checkValidate == true) {
                 let records = await getPosts(req, res);
-                return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: records });
-            } else {
-                return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
-            }
+                return sendResponse(req, res, { page: 'getpostdetail', pageTitle: 'Post Detail', records: records});
+            } 
+            return sendResponse(req, res, { page: 'getpostdetail', pageTitle: 'Post Detail', error: checkValidate });
         } catch (error) {
-            console.log("error", error)
-            return res.render('getpostdetail', { title: 'Post Detail', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
+            return sendResponse(req, res, { page: 'getpostdetail', pageTitle: 'Post Detail', error: error.message || error.sqlMessage });
         }
 
     },
     createPost: async (req, res) => {
-        let obj = {
-            pageUrl :"/user/post",
-            title: 'Create Posts',
-            isUserLoggedIn: req.session.user_id ? true : false,
-            name: "",
-            records: [],
-            error :"", 
-            message:"",
-            blogtitle: "",
-            content :""
-        }
         try {
             const { title, content } = req.body;
-            if (title && title.trim().length && content && content.trim().length) {
-                let user_id = req.session.user_id || 1; 
-                let query = `INSERT INTO posts (title,content,user_id) VALUES ('${title}','${content}',${user_id});`;
-                await queryExecution(query);
-                return res.render('CreateORUpdatePost', obj);
-            } else {
-                obj.message = "All fields are required";
-                return res.render('CreateORUpdatePost', obj);
+            let checkValidate = validatioReqBody(req, res, "createPost");
+            if (checkValidate == true) {
+                let user_id = req.session.user_id || 1;
+                let query = `INSERT INTO posts (title, content, user_id) VALUES (?, ?, ?)`;
+                await queryExecution(query, [title, content, user_id]);
+                return sendResponse(req, res, { page: 'CreateORUpdatePost', pageTitle: 'Create Posts', pageUrl: "/user/post" , message: "Post Created Successfully!!" });
             }
+            return sendResponse(req, res, { page: 'CreateORUpdatePost', pageTitle: 'Create Posts', pageUrl: "/user/post", error: checkValidate });
         } catch (error) {
-            console.log("error create", error)
-            obj.message = error.sqlMessage
-            return res.render('CreateORUpdatePost', obj);
+            return sendResponse(req, res, { page: 'CreateORUpdatePost', pageTitle: 'Create Posts', pageUrl: "/user/post", error: error.message || error.sqlMessage });
         }
 
     },
     updatePost: async (req, res) => {
-        let obj = {
-            pageUrl :"/user/post/" +req.params.id,
-            title: 'Post Update Detail',
-            isUserLoggedIn: req.session.user_id ? true : false,
-            name: "",
-            records: [],
-            error :"", 
-            message:"",
-            blogtitle: req.body.title || "",
-            content : req.body.title || ""
-        }
         try {
             const { title, content } = req.body;
-            let id = req.params.id && req.params.id.length ? Number(req.params.id) : req.params.id;
-            if (title && title.trim().length && content && content.trim().length && id && id !== NaN) {
-                let query = `UPDATE posts SET title = '${title}', content = '${content}' WHERE posts_id = ${id}`;
-                await queryExecution(query);
-                obj.message = "Record update Successfully"
+            let checkValidate = validatioReqBody(req, res, "updatePost");
+            if (checkValidate == true) {
+                let query = `UPDATE posts SET title = ?, content = ? WHERE posts_id = ?`;
+                await queryExecution(query,[title, content, req.params.id]);
                 delete req.params.id;
-                let records = await getPosts(req,res);
-                obj.records = records;
-                obj.message ="Record Update Successfully";
-                return res.render('userAllPost', obj);
-            } else {
-                obj.message = "All Fields are required!!"
-                return res.render('CreateORUpdatePost', obj);
-            }
-        } catch (error) {
-            obj.message = error.sqlMessage
-            return res.render('CreateORUpdatePost', obj);
-        }
+                let records = await getPosts(req, res);
+                return sendResponse(req, res, { page: 'CreateORUpdatePost', pageTitle: 'Post Update Detail', pageUrl: "/user/post/" + req.params.id, message : "Record Update Successfully", blogtitle: req.body.title, content: req.body.content, records : records});
+            } 
+        return sendResponse(req, res, { page: 'CreateORUpdatePost', pageTitle: 'Post Update Detail', pageUrl: "/user/post/" + req.params.id, error: checkValidate });
+    } catch (error) {
+        return sendResponse(req, res, { page: 'CreateORUpdatePost', pageTitle: 'Post Update Detail', pageUrl: "/user/post/" + req.params.id, error: error.message || error.sqlMessage });
+    }
 
     },
+
     deletePost: async (req, res) => {
         try {
-            let id = req.params.id && req.params.id.length ? Number(req.params.id) : req.params.id;
-            if (id && id !== NaN) {
-                // let query = `DELETE FROM posts WHERE posts_id = ${id}`;
-                let query = `DELETE FROM posts WHERE posts_id = ${id} AND user_id = ${req.session.user_id}`;
-                await queryExecution(query);
+            let checkValidate = validatioReqBody(req, res, "vaildateId");
+            if (checkValidate == true) {
+                let query = `DELETE FROM posts WHERE posts_id = ? AND user_id = ?`;
+                await queryExecution(query, [req.params.id, req.session.user_id]);
                 req.query = { user_id: req.session.user_id }
                 delete req.params.id;
                 let records = await getPosts(req, res);
-                return res.render('userAllPost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: records });
-            } else {
-                return res.render('userAllPost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
-            }
-        } catch (error) {
-            console.log("error delete", error)
-            return res.render('userAllPost', { title: 'User Posts', isUserLoggedIn: req.session.user_id ? true : false, name: "", records: [] });
-        }
+                return sendResponse(req, res, { page: 'userAllPost', pageTitle: 'User Posts', records: records });
+            } 
+        return sendResponse(req, res, { page: 'userAllPost', pageTitle: 'User Posts', error: checkValidate });
+    } catch (error) {
+        return sendResponse(req, res, { page: 'userAllPost', pageTitle: 'User Posts', error: error.message || error.sqlMessage });
+    }
     },
+
     getPostForm: async (req, res) => {
-        let obj = {
-            pageUrl :"/user/post",
-            title: 'User Posts', 
-            isUserLoggedIn: req.session.user_id ? true : false, 
-            name: "", 
-            records: [],
-            error :"",
-            message:"" ,
-            blogtitle: "",
-            content :""
-        }
-        try {
-            return res.render('CreateORUpdatePost', obj);
-        } catch (error) {
-            console.log("error delete", error)
-            obj.error = error.sqlMessage;
-            return res.render('CreateORUpdatePost', obj);
-        }
+        return sendResponse(req, res, { page: 'CreateORUpdatePost', pageTitle: 'User Posts' });
     },
+
     getPostUpdateForm: async (req, res) => {
-        let obj = {
-            pageUrl :"/user/post/" +req.params.id,
-            title: 'Post Update Detail',
-            isUserLoggedIn: req.session.user_id ? true : false,
-            name: "",
-            records: [],
-            error :"", 
-            message:"",
-            blogtitle: "",
-            content :""
-        }
         try {
-            let id = req.params.id && req.params.id.length ? Number(req.params.id) : req.params.id;
-            if (id && id !== NaN) {
+            let checkValidate = validatioReqBody(req, res, "vaildateId");
+            if (checkValidate == true) {
                 let records = await getPosts(req, res);
-                obj.blogtitle = records[0].title;
-                obj.content = records[0].content;
-                return res.render('CreateORUpdatePost', obj);
-            } else {
-                obj.message = "All fields are required";
-                return res.render('CreateORUpdatePost', obj);
+                return sendResponse(req, res, { page: 'CreateORUpdatePost', pageTitle: 'Post Update Detail', pageUrl: "/user/post/" + req.params.id , blogtitle : records[0].title , content : records[0].content});
             }
+            return sendResponse(req, res, { page: 'CreateORUpdatePost', pageTitle: 'Post Update Detail', pageUrl: "/user/post/" + req.params.id, error: checkValidate });
         } catch (error) {
-            console.log("error CreateORUpdatePost", error);
-            obj.message = error.sqlMessage
-            return res.render('CreateORUpdatePost', obj);
+            return sendResponse(req, res, { page: 'CreateORUpdatePost', pageTitle: 'Post Update Detail', pageUrl: "/user/post/" + req.params.id, error: error.message || error.sqlMessage });
         }
     },
-    getUserAllPost : async(req, res) => {
+    getUserAllPost: async (req, res) => {
         try {
-            let records = await getPosts(req,res);
-            return res.render('userAllPost', { title: 'Blogs', isUserLoggedIn: req.session.user_id ? true : false, name:"",records : records });
+            req.query.user_id = req.session.user_id;
+            let records = await getPosts(req, res);
+            return sendResponse(req, res, { page: 'userAllPost', pageTitle: 'Blogs', records: records});
         } catch (error) {
-          return res.render('userAllPost', { title: 'Blogs', isUserLoggedIn: req.session.user_id ? true : false, name:"" , records : []});
+            return sendResponse(req, res, { page: 'userAllPost', pageTitle: 'Blogs', error: "Something went Wrong!!"});
         }
     },
     getAllPost: getPosts

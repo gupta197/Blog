@@ -136,7 +136,7 @@ module.exports.validatioReqBody = (req, res, data) => {
             schema = Joi.object({
                 title: Joi.string().required(),
                 content: Joi.string().required()
-            });
+            }).unknown();;
             id = req.params.id && req.params.id.length ? Number(req.params.id) : req.params.id;
             idEvalation = id && id !== NaN ? true : false;
             break;

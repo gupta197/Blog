@@ -9,15 +9,22 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <%- include('header',{title:title,isUserLoggedIn: false, name:""}); %>
+                <%- include('header',{title:title,isUserLoggedIn: isUserLoggedIn, name:name}); %>
             </div>
         </div>
         <div class="row pt-2">
             <div class="p-4 ">
                 <div class="row">
                     <div class="col-12">
+                        <% if(message.length> 0){ %>
+                            <div  class="mb-3 p-4 text-center">
+                                <strong class="text-success">
+                                    <%= message %>
+                                </strong>
+                            </div>
+                            <% } %>
                         <% if(error.length> 0){ %>
-                            <div class="mb-3 p-4">
+                            <div class="mb-3 p-4 text-center">
                                 <strong class="text-red">
                                     <%= error %>
                                 </strong>
@@ -39,22 +46,18 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row" style="display: flex; justify-content: center;">
-                                        <a class="btn btn-warning mb-3 col-sm-2 col-form-label" type="submit" href="/user/dashboard"
-                                            name="submit" aria-label="submit" style="margin-right: 10px;">
-                                            cancel</a>
                                         <button class="btn btn-primary mb-3 col-sm-2 col-form-label" type="submit"
+                                        name="submit" aria-label="submit" style="margin-right: 10px;">
+                                        Submit
+                                    </button>
+                                        <a class="btn btn-default mb-3 col-sm-2 col-form-label border" type="submit" href="/user/dashboard"
                                             name="submit" aria-label="submit" style="margin-right: 10px;">
-                                            Submit</button>
+                                            Cancel</a>
+                      
                                     </div>
 
                                 </form>
-                                <% if(message.length> 0){ %>
-                                    <div>
-                                        <strong class="text-success">
-                                            <%= message %>
-                                        </strong>
-                                    </div>
-                                    <% } %>
+               
                     </div>
                 </div>
             </div>
